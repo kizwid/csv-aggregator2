@@ -13,7 +13,7 @@ pipeline {
     }
 
     tools {
-        jdk 'jdk_1.8.0.111'
+        jdk 'jdk1.8.0_111'
         maven 'maven-3.3.9'
     }
 
