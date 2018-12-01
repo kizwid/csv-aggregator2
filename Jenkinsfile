@@ -2,9 +2,7 @@
 
 pipeline {
 
-    //agent {
-    //    label 'UX-FS'
-    //}
+    agent any
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
