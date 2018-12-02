@@ -30,14 +30,14 @@
     </scm>
 
     <distributionManagement>
-        <repository>
-            <id>MY-releases</id>
-            <url>http://localhost:8081/repository/MY-releases/</url>
-        </repository>
         <snapshotRepository>
             <id>MY-snapshots</id>
             <url>http://localhost:8081/repository/MY-snapshots/</url>
         </snapshotRepository>
+        <repository>
+            <id>MY-releases</id>
+            <url>http://localhost:8081/repository/MY-releases/</url>
+        </repository>
     </distributionManagement>
 
     <repositories>
