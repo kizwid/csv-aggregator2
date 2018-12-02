@@ -44,8 +44,18 @@ pipeline {
             steps {
                 script {
                     def revision = getRevision()
-                    bat "mvn " +
-                        "deploy -Darguments=\"-Dmaven.javadoc.failOnError=false\" -Drevision=${revision} -Dmaven.tests.skip=true -DskipTests"
+                    withCredentials(
+                        [usernamePassword(credentialsId: 'nexus-admin',
+                        passwordVariable: 'SCM_PASSWORD', usernameVariable: 'SCM_USERNAME'),
+                        file(credentialsId: 'maven-settings', variable: 'MAVEN_SETTINGS')]) {
+
+                            //no need to tag snapshot versions (currently svn does not like tagging - 'scm:tag')
+                            def tagDirective = revision.endsWith("SNAPSHOT")?"":""
+
+                            bat "mvn -s ${MAVEN_SETTINGS} -Dusername=${SCM_USERNAME} -Dpassword=${SCM_PASSWORD} " +
+                            "deploy ${tagDirective} -Darguments=\"-Dmaven.javadoc.failOnError=false\" -Drevision=${revision} -Dmaven.tests.skip=true -DskipTests"
+                        }
+                    }
                 }
             }
         }
