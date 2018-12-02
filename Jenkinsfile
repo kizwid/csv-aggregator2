@@ -47,7 +47,7 @@ pipeline {
                     withCredentials([file(credentialsId: 'm2_settings', variable: 'MAVEN_SETTINGS')]) {
 
                             //no need to tag snapshot versions (currently svn does not like tagging - 'scm:tag')
-                            def tagDirective = revision.endsWith("SNAPSHOT")?"":""
+                            def tagDirective = revision.endsWith("SNAPSHOT")?"":"scm:tag"
 
                             bat "mvn -s ${MAVEN_SETTINGS} " +
                             "deploy ${tagDirective} -Darguments=\"-Dmaven.javadoc.failOnError=false\" -Drevision=${revision} -Dmaven.tests.skip=true -DskipTests"
