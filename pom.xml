@@ -31,33 +31,31 @@
 
     <distributionManagement>
         <repository>
-            <id>my-repo</id>
+            <id>MY-releases</id>
             <url>http://localhost:8081/repository/MY-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>my-repo</id>
+            <id>MY-snapshots</id>
             <url>http://localhost:8081/repository/MY-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
-    <!--<repositories>-->
-    <!--<repository>-->
-    <!--<id>MY-Snapshots</id>-->
-    <!--<url>http://nexus.com/content/repositories/MY-Snapshots</url>-->
-    <!--<snapshots>-->
-    <!--<enabled>true</enabled>-->
-    <!--</snapshots>-->
-    <!--</repository>-->
-    <!--<repository>-->
-    <!--<id>MY-Releases</id>-->
-    <!--<url>http://nexus.com/content/repositories/MY-Releases</url>-->
-    <!--<releases>-->
-    <!--<enabled>true</enabled>-->
-    <!--</releases>-->
-    <!--</repository>-->
-
-
-    <!--</repositories>-->
+    <repositories>
+        <repository>
+            <id>MY-snapshots</id>
+            <url>http://localhost:8081/repository/MY-snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>MY-releases</id>
+            <url>http://localhost:8081/repository/MY-releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
     <properties>
         <revision>0-SNAPSHOT</revision>
@@ -96,6 +94,21 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.2</version>
             </plugin>
+<!--
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -104,6 +117,27 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.5.1</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <serverId>nexus</serverId>
+                    <nexusUrl>http://localhost:8081/</nexusUrl>
+                    <skipStaging>true</skipStaging>
+                </configuration>
+            </plugin>
+
 <!--
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
