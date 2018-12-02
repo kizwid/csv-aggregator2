@@ -49,7 +49,7 @@ pipeline {
                             //no need to tag snapshot versions (currently svn does not like tagging - 'scm:tag')
                             def tagDirective = revision.endsWith("SNAPSHOT")?"":""
 
-                            bat "mvn -s ${MAVEN_SETTINGS} -Dusername=${SCM_USERNAME} -Dpassword=${SCM_PASSWORD} " +
+                            bat "mvn -s ${MAVEN_SETTINGS} " +
                             "deploy ${tagDirective} -Darguments=\"-Dmaven.javadoc.failOnError=false\" -Drevision=${revision} -Dmaven.tests.skip=true -DskipTests"
                         }
 
