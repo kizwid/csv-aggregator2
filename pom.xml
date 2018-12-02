@@ -7,23 +7,180 @@
     <groupId>kevsanders</groupId>
     <artifactId>csv-aggregator</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
+
+    <issueManagement>
+        <system>Jira</system>
+        <url>https://jira.com</url>
+    </issueManagement>
+    <ciManagement>
+        <system>jenkins</system>
+        <url>http://jenkins.com/</url>
+    </ciManagement>
+    <scm>
+        <!-- This is required by the buildnumber-maven-plugin so that the svn revision number can be used  -->
+        <connection>
+            scm:git:https://github.com/kizwid/csv-aggregator2.git
+        </connection>
+        <developerConnection>
+            scm:git:https://github.com/kizwid/csv-aggregator2.git
+        </developerConnection>
+
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>my-repo</id>
+            <url>http://localhost:8081/repository/MY-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>my-repo</id>
+            <url>http://localhost:8081/repository/MY-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <!--<repositories>-->
+    <!--<repository>-->
+    <!--<id>MY-Snapshots</id>-->
+    <!--<url>http://nexus.com/content/repositories/MY-Snapshots</url>-->
+    <!--<snapshots>-->
+    <!--<enabled>true</enabled>-->
+    <!--</snapshots>-->
+    <!--</repository>-->
+    <!--<repository>-->
+    <!--<id>MY-Releases</id>-->
+    <!--<url>http://nexus.com/content/repositories/MY-Releases</url>-->
+    <!--<releases>-->
+    <!--<enabled>true</enabled>-->
+    <!--</releases>-->
+    <!--</repository>-->
+
+
+    <!--</repositories>-->
 
     <properties>
+        <revision>0-SNAPSHOT</revision>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven-release-plugin-version>2.5.3</maven-release-plugin-version>
+        <maven-deploy-plugin-version>2.8.2</maven-deploy-plugin-version>
+        <maven-javadoc-plugin-version>3.0.1</maven-javadoc-plugin-version>
+        <nexus-staging-maven-plugin-version>1.6.8</nexus-staging-maven-plugin-version>
+        <time.stamp>${maven.build.timestamp}</time.stamp>
+        <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
         <spring-version>3.2.0.RELEASE</spring-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.9.4</version>
+                <configuration>
+                    <tag>${project.artifactId}-${project.version}</tag>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin-version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+<!--
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus-staging-maven-plugin-version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <serverId>my-repo</serverId>
+                    <nexusUrl>http://localhost:8081</nexusUrl>
+                    &lt;!&ndash;this is the old tby0 staging profile which we still have write access to (vx10 is not writable by us)&ndash;&gt;
+                    &lt;!&ndash;<stagingProfileId>dff1cb34dc83c</stagingProfileId>&ndash;&gt;
+                    &lt;!&ndash;this is the vx10 staging profile&ndash;&gt;
+                    <stagingProfileId>bc76078a95d11b</stagingProfileId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>deploy-staged</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+-->
+
+            <!-- make svn revision number available in the pom as ${buildNumber} -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <useLastCommittedRevision>true</useLastCommittedRevision>
+                    <revisionOnScmFailure>00000</revisionOnScmFailure>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin-version}</version>
+                <configuration>
+                    <tagBase>
+                        https://github.com/kizwid/csv-aggregator2.git
+                    </tagBase>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
