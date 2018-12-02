@@ -53,7 +53,7 @@ pipeline {
                             def tagDirective = revision.endsWith("SNAPSHOT")?"":""
 
                             //bat "mvn -s ${MAVEN_SETTINGS} -Dusername=${SCM_USERNAME} -Dpassword=${SCM_PASSWORD} " +
-                            bat "mvn -s C:\Users\kevsa\.m2\settings.xml -Dusername=${SCM_USERNAME} -Dpassword=${SCM_PASSWORD} " +
+                            bat "mvn -s 'C:\Users\kevsa\.m2\settings.xml' -Dusername=${SCM_USERNAME} -Dpassword=${SCM_PASSWORD} " +
                             "deploy ${tagDirective} -Darguments=\"-Dmaven.javadoc.failOnError=false\" -Drevision=${revision} -Dmaven.tests.skip=true -DskipTests"
                         }
 
