@@ -30,7 +30,7 @@ public class CSVMapperTest {
     @Test
     public void willThrowExceptionWhenNoData(){
         String csvFile = "";
-        assertEquals("", new CSVMapper().transformCsv(csvFile));
+        assertEquals("Company, Downloaded, Watched, Subscribed\n", new CSVMapper().transformCsv(csvFile));
     }
 
     @Test
