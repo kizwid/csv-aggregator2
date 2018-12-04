@@ -63,11 +63,12 @@ pipeline {
 
 def getRevision() {
     def revisionNumber = env.BUILD_NUMBER;
+    def branchName = env.BRANCH_NAME;
     //all other branches are SNAPSHOTS
-    if( env.BRANCH_NAME.startWith("release-")) {
+    if( branchName.startWith("release-")) {
         revisionNumber += "rc"
-    } else if( !"master".euals(env.BRANCH_NAME)) {
-        revisionNumber += "env.BRANCH_NAME"
+    } else if( !"master".equals(branchName)) {
+        revisionNumber += branchName
     }
     if( !params.RELEASE){
         revisionNumber += "-SNAPSHOT"
