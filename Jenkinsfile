@@ -69,9 +69,9 @@ def getRevision() {
     println "branchName is " + branchName
     //all other branches are SNAPSHOTS
     if( branchName.contains("release")) {
-        revisionNumber += "rc"
+        revisionNumber += "-rc"
     } else if( ! branchName.contains("master")) {
-        revisionNumber += branchName
+        revisionNumber += "-${branchName}"
     }
     if( !params.RELEASE){
         revisionNumber += "-SNAPSHOT"
