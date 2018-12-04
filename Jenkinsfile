@@ -65,10 +65,10 @@ def getRevision() {
     def revisionNumber = env.BUILD_NUMBER;
     def branchName = env.BRANCH_NAME;
     //all other branches are SNAPSHOTS
-    if( branchName.startWith("release-")) {
+    if( "$branchName".startWith("release-")) {
         revisionNumber += "rc"
-    } else if( !"master".equals(branchName)) {
-        revisionNumber += branchName
+    } else if( !"master".equals("$branchName")) {
+        revisionNumber += "$branchName"
     }
     if( !params.RELEASE){
         revisionNumber += "-SNAPSHOT"
