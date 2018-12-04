@@ -64,10 +64,13 @@ pipeline {
 def getRevision() {
     def revisionNumber = env.BUILD_NUMBER;
     String branchName = env.BRANCH_NAME;
+    println "BRANCH_NAME is " + BRANCH_NAME
+    println "env.BRANCH_NAME is " + env.BRANCH_NAME
+    println "branchName is " + branchName
     //all other branches are SNAPSHOTS
-    if( branchName.startWith("release-")) {
+    if( branchName.contains("release")) {
         revisionNumber += "rc"
-    } else if( !"master".equals(branchName)) {
+    } else if( ! branchName.contains("master")) {
         revisionNumber += branchName
     }
     if( !params.RELEASE){
