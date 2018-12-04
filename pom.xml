@@ -6,7 +6,7 @@
 
     <groupId>kevsanders</groupId>
     <artifactId>csv-aggregator</artifactId>
-    <version>1.0.${revision}</version>
+    <version>1.1.${revision}</version>
 
 
     <issueManagement>
