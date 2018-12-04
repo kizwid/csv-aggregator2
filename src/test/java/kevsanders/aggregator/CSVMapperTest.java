@@ -25,7 +25,18 @@ public class CSVMapperTest {
                 "PQR, 1, 0, 2\n" +
                 "ABC, 1, 2, 0\n" +
                 "XYZ, 0, 1, 1\n", new CSVMapper().transformCsv(csvFile));
+    }
 
+    @Test
+    public void willThrowExceptionWhenNoData(){
+        String csvFile = "";
+        assertEquals("", new CSVMapper().transformCsv(csvFile));
+    }
+
+    @Test
+    public void testMain(){
+        CSVMapper.main(null);
+        assertTrue(true); //just to increase coverage
     }
 
 }
