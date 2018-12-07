@@ -32,25 +32,25 @@
     <distributionManagement>
         <snapshotRepository>
             <id>MY-snapshots</id>
-            <url>http://localhost:8081/repository/MY-snapshots/</url>
+            <url>http://localhost:8082/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>MY-releases</id>
-            <url>http://localhost:8081/repository/MY-releases/</url>
+            <url>http://localhost:8082/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 
     <repositories>
         <repository>
             <id>MY-snapshots</id>
-            <url>http://localhost:8081/repository/MY-snapshots</url>
+            <url>http://localhost:8082/content/repositories/snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
             <id>MY-releases</id>
-            <url>http://localhost:8081/repository/MY-releases</url>
+            <url>http://localhost:8082/content/repositories/releases</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
