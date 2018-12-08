@@ -53,7 +53,7 @@
         </snapshotRepository>
         <repository>
             <id>MY-releases</id>
-            <url>http://${nexus}/content/repositories/releases/</url>
+            <url>http://${nexus}/content/repositories/staging/</url>
         </repository>
     </distributionManagement>
 
@@ -67,7 +67,7 @@
         </repository>
         <repository>
             <id>MY-releases</id>
-            <url>http://${nexus}/content/repositories/releases</url>
+            <url>http://${nexus}/content/repositories/staging</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
