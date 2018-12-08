@@ -8,6 +8,23 @@
     <artifactId>csv-aggregator</artifactId>
     <version>1.1.3${revision}</version>
 
+    <properties>
+        <revision>-0-SNAPSHOT</revision>
+        <nexus>localhost:8082</nexus>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven-release-plugin-version>2.5.3</maven-release-plugin-version>
+        <maven-deploy-plugin-version>2.8.2</maven-deploy-plugin-version>
+        <maven-javadoc-plugin-version>3.0.1</maven-javadoc-plugin-version>
+        <nexus-staging-maven-plugin-version>1.6.8</nexus-staging-maven-plugin-version>
+        <time.stamp>${maven.build.timestamp}</time.stamp>
+        <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
+        <spring-version>3.2.0.RELEASE</spring-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jacoco.version>0.7.5.201505241946</jacoco.version>
+    </properties>
+
 
     <issueManagement>
         <system>Jira</system>
@@ -32,46 +49,30 @@
     <distributionManagement>
         <snapshotRepository>
             <id>MY-snapshots</id>
-            <url>http://localhost:8082/content/repositories/snapshots/</url>
+            <url>http://${nexus}/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>MY-releases</id>
-            <url>http://localhost:8082/content/repositories/releases/</url>
+            <url>http://${nexus}/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 
     <repositories>
         <repository>
             <id>MY-snapshots</id>
-            <url>http://localhost:8082/content/repositories/snapshots/</url>
+            <url>http://${nexus}/content/repositories/snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
             <id>MY-releases</id>
-            <url>http://localhost:8082/content/repositories/releases</url>
+            <url>http://${nexus}/content/repositories/releases</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
         </repository>
     </repositories>
-
-    <properties>
-        <revision>-0-SNAPSHOT</revision>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <maven-release-plugin-version>2.5.3</maven-release-plugin-version>
-        <maven-deploy-plugin-version>2.8.2</maven-deploy-plugin-version>
-        <maven-javadoc-plugin-version>3.0.1</maven-javadoc-plugin-version>
-        <nexus-staging-maven-plugin-version>1.6.8</nexus-staging-maven-plugin-version>
-        <time.stamp>${maven.build.timestamp}</time.stamp>
-        <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
-        <spring-version>3.2.0.RELEASE</spring-version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jacoco.version>0.7.5.201505241946</jacoco.version>
-    </properties>
 
     <build>
         <plugins>
@@ -118,7 +119,7 @@
                 </executions>
                 <configuration>
                     <serverId>nexus</serverId>
-                    <nexusUrl>http://localhost:8081/</nexusUrl>
+                    <nexusUrl>http://${nexus}/</nexusUrl>
                     <skipStaging>true</skipStaging>
                 </configuration>
             </plugin>
@@ -133,7 +134,7 @@
                     <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
                     <autoReleaseAfterClose>false</autoReleaseAfterClose>
                     <serverId>my-repo</serverId>
-                    <nexusUrl>http://localhost:8081</nexusUrl>
+                    <nexusUrl>http://${nexus}</nexusUrl>
                     &lt;!&ndash;this is the old tby0 staging profile which we still have write access to (vx10 is not writable by us)&ndash;&gt;
                     &lt;!&ndash;<stagingProfileId>dff1cb34dc83c</stagingProfileId>&ndash;&gt;
                     &lt;!&ndash;this is the vx10 staging profile&ndash;&gt;
